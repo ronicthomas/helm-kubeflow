@@ -1,0 +1,30 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-clusterservingruntime.serving.kserve.io
+  annotations:
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "kubeflow.fullname" . }}-kubeflow/serving-cert
+  labels:
+  {{- include "kubeflow.labels" . | nindent 4 }}
+webhooks:
+- admissionReviewVersions:
+  - v1beta1
+  clientConfig:
+    caBundle: Cg==
+    service:
+      name: '{{ include "kubeflow.fullname" . }}-kserve-webhook-server-service'
+      namespace: kubeflow
+      path: /validate-serving-kserve-io-v1alpha1-clusterservingruntime
+  failurePolicy: Fail
+  name: clusterservingruntime.kserve-webhook-server.validator
+  rules:
+  - apiGroups:
+    - serving.kserve.io
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - clusterservingruntimes
+  sideEffects: None

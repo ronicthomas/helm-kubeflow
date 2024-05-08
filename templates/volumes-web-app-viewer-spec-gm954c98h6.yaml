@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-volumes-web-app-viewer-spec-gm954c98h6
+  labels:
+    app: volumes-web-app
+    kustomize.component: volumes-web-app
+  {{- include "kubeflow.labels" . | nindent 4 }}
+data:
+  viewer-spec.yaml: {{ .Values.volumesWebAppViewerSpecGm954C98H6.viewerSpecYaml |
+    toYaml | indent 1 }}

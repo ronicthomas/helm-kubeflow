@@ -1,0 +1,14 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-webhook-pdb
+  labels:
+    app.kubernetes.io/component: webhook
+  {{- include "kubeflow.labels" . | nindent 4 }}
+spec:
+  minAvailable: {{ .Values.webhookPdb.minAvailable }}
+  maxUnavailable: {{ .Values.webhookPdb.maxUnavailable }}
+  selector:
+    matchLabels:
+      app: webhook
+    {{- include "kubeflow.selectorLabels" . | nindent 6 }}

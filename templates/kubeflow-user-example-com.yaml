@@ -1,0 +1,10 @@
+apiVersion: kubeflow.org/v1beta1
+kind: Profile
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-kubeflow-user-example-com
+  labels:
+  {{- include "kubeflow.labels" . | nindent 4 }}
+spec:
+  owner:
+    kind: User
+    name: user@example.com

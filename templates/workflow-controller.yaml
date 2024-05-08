@@ -1,0 +1,10 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-workflow-controller
+  labels:
+    application-crd-id: kubeflow-pipelines
+  {{- include "kubeflow.labels" . | nindent 4 }}
+  annotations:
+    internal.kpt.dev/upstream-identifier: scheduling.k8s.io|PriorityClass|default|workflow-controller
+value: 1000000

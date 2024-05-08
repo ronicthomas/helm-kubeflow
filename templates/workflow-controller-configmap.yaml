@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-workflow-controller-configmap
+  labels:
+    application-crd-id: kubeflow-pipelines
+  {{- include "kubeflow.labels" . | nindent 4 }}
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|ConfigMap|default|workflow-controller-configmap'
+data:
+  artifactRepository: {{ .Values.workflowControllerConfigmap.artifactRepository |
+    toYaml | indent 1 }}
+  containerRuntimeExecutor: {{ .Values.workflowControllerConfigmap.containerRuntimeExecutor
+    | quote }}
+  executor: {{ .Values.workflowControllerConfigmap.executor | toYaml | indent 1 }}

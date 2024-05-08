@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-serving-cert
+  labels:
+  {{- include "kubeflow.labels" . | nindent 4 }}
+spec:
+  commonName: kserve-webhook-server-service.kubeflow.svc
+  dnsNames:
+  - '{{ include "kubeflow.fullname" . }}-kserve-webhook-server-service.kubeflow.svc'
+  issuerRef:
+    kind: Issuer
+    name: '{{ include "kubeflow.fullname" . }}-selfsigned-issuer'
+  secretName: kserve-webhook-server-cert

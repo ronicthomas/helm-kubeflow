@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-authservice
+  labels:
+  {{- include "kubeflow.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.authservice.type }}
+  selector:
+    app: authservice
+  {{- include "kubeflow.selectorLabels" . | nindent 4 }}
+  ports:
+	{{- .Values.authservice.ports | toYaml | nindent 2 }}

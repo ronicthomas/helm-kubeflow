@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-control-serving-certs
+  labels:
+    networking.internal.knative.dev/certificate-uid: serving-certs
+    serving-certs-ctrl: control-plane
+  {{- include "kubeflow.labels" . | nindent 4 }}

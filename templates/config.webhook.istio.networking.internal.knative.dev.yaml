@@ -1,0 +1,23 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-config.webhook.istio.networking.internal.knative.dev
+  annotations:
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "kubeflow.fullname" . }}-
+  labels:
+  {{- include "kubeflow.labels" . | nindent 4 }}
+webhooks:
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: '{{ include "kubeflow.fullname" . }}-net-istio-webhook'
+      namespace: '{{ .Release.Namespace }}'
+  failurePolicy: Fail
+  name: config.webhook.istio.networking.internal.knative.dev
+  objectSelector:
+    matchLabels:
+      app.kubernetes.io/component: net-istio
+      app.kubernetes.io/name: knative-serving
+  sideEffects: None

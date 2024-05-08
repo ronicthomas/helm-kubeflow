@@ -1,0 +1,21 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-eventing-sources-source-observer
+  labels:
+    app.kubernetes.io/component: knative-eventing
+    duck.knative.dev/source: "true"
+    kustomize.component: knative
+  {{- include "kubeflow.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - sources.knative.dev
+  resources:
+  - apiserversources
+  - pingsources
+  - sinkbindings
+  - containersources
+  verbs:
+  - get
+  - list
+  - watch

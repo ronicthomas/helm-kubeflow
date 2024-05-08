@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-profiles-config-5h9m86f79f
+  labels:
+    kustomize.component: profiles
+  {{- include "kubeflow.labels" . | nindent 4 }}
+data:
+  ADMIN: {{ .Values.profilesConfig5H9M86F79F.admin | quote }}
+  ISTIO_INGRESS_GATEWAY_PRINCIPAL: {{ .Values.profilesConfig5H9M86F79F.istioIngressGatewayPrincipal
+    | quote }}
+  KFP_UI_PRINCIPAL: {{ .Values.profilesConfig5H9M86F79F.kfpUiPrincipal | quote }}
+  NOTEBOOK_CONTROLLER_PRINCIPAL: {{ .Values.profilesConfig5H9M86F79F.notebookControllerPrincipal
+    | quote }}
+  USERID_HEADER: {{ .Values.profilesConfig5H9M86F79F.useridHeader | quote }}
+  USERID_PREFIX: {{ .Values.profilesConfig5H9M86F79F.useridPrefix | quote }}
+  WORKLOAD_IDENTITY: {{ .Values.profilesConfig5H9M86F79F.workloadIdentity | quote
+    }}

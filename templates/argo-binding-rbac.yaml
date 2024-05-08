@@ -1,0 +1,35 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-argo-binding
+  labels:
+    application-crd-id: kubeflow-pipelines
+  {{- include "kubeflow.labels" . | nindent 4 }}
+  annotations:
+    internal.kpt.dev/upstream-identifier: rbac.authorization.k8s.io|RoleBinding|default|argo-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: '{{ include "kubeflow.fullname" . }}-argo-role'
+subjects:
+- kind: ServiceAccount
+  name: '{{ include "kubeflow.fullname" . }}-argo'
+  namespace: '{{ .Release.Namespace }}'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-argo-binding
+  labels:
+    application-crd-id: kubeflow-pipelines
+  {{- include "kubeflow.labels" . | nindent 4 }}
+  annotations:
+    internal.kpt.dev/upstream-identifier: rbac.authorization.k8s.io|ClusterRoleBinding|default|argo-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: '{{ include "kubeflow.fullname" . }}-argo-cluster-role'
+subjects:
+- kind: ServiceAccount
+  name: '{{ include "kubeflow.fullname" . }}-argo'
+  namespace: '{{ .Release.Namespace }}'

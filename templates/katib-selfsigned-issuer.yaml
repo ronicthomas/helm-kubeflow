@@ -1,0 +1,8 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-katib-selfsigned-issuer
+  labels:
+  {{- include "kubeflow.labels" . | nindent 4 }}
+spec:
+  selfSigned: {}

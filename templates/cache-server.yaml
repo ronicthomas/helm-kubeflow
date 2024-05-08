@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-cache-server
+  labels:
+    app: cache-server
+    app.kubernetes.io/component: ml-pipeline
+    application-crd-id: kubeflow-pipelines
+  {{- include "kubeflow.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.cacheServer.type }}
+  selector:
+    app: cache-server
+    app.kubernetes.io/component: ml-pipeline
+    app.kubernetes.io/name: kubeflow-pipelines
+    application-crd-id: kubeflow-pipelines
+  {{- include "kubeflow.selectorLabels" . | nindent 4 }}
+  ports:
+	{{- .Values.cacheServer.ports | toYaml | nindent 2 }}

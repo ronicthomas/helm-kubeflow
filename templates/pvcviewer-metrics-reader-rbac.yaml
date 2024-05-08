@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-pvcviewer-metrics-reader
+  labels:
+    app: pvcviewer
+    app.kubernetes.io/component: kube-rbac-proxy
+    app.kubernetes.io/created-by: pvc-viewer
+    app.kubernetes.io/part-of: pvc-viewer
+  {{- include "kubeflow.labels" . | nindent 4 }}
+rules:
+- nonResourceURLs:
+  - /metrics
+  verbs:
+  - get

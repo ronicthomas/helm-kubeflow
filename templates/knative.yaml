@@ -1,0 +1,11 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-knative
+  labels:
+  {{- include "kubeflow.labels" . | nindent 4 }}
+spec:
+  host: '*.knative-serving.svc.cluster.local'
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL

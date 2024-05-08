@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-config-features
+  labels:
+    app.kubernetes.io/component: knative-eventing
+    knative.dev/config-category: eventing
+    knative.dev/config-propagation: original
+    kustomize.component: knative
+  {{- include "kubeflow.labels" . | nindent 4 }}
+data:
+  delivery-retryafter: {{ .Values.configFeatures.deliveryRetryafter | quote }}
+  delivery-timeout: {{ .Values.configFeatures.deliveryTimeout | quote }}
+  kreference-group: {{ .Values.configFeatures.kreferenceGroup | quote }}
+  kreference-mapping: {{ .Values.configFeatures.kreferenceMapping | quote }}
+  new-trigger-filters: {{ .Values.configFeatures.newTriggerFilters | quote }}
+  transport-encryption: {{ .Values.configFeatures.transportEncryption | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-config-features
+  labels:
+    app.kubernetes.io/component: controller
+  {{- include "kubeflow.labels" . | nindent 4 }}
+  annotations:
+    knative.dev/example-checksum: d3565159
+data:
+  _example: {{ .Values.configFeatures.Example | toYaml | indent 1 }}

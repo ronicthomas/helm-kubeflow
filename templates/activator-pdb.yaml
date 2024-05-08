@@ -1,0 +1,14 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-activator-pdb
+  labels:
+    app.kubernetes.io/component: activator
+  {{- include "kubeflow.labels" . | nindent 4 }}
+spec:
+  minAvailable: {{ .Values.activatorPdb.minAvailable }}
+  maxUnavailable: {{ .Values.activatorPdb.maxUnavailable }}
+  selector:
+    matchLabels:
+      app: activator
+    {{- include "kubeflow.selectorLabels" . | nindent 6 }}

@@ -1,0 +1,7 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "kubeflow.fullname" . }}-global-deny-all
+  labels:
+  {{- include "kubeflow.labels" . | nindent 4 }}
+spec: {}
